@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Două luni pentru noi</title>
+  <meta name="description" content="O mică pagină interactivă de mulțumire, cu jocuri scurte și un mesaj ascuns pentru aniversarea de 2 luni." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root,[data-theme="light"]{
+      --text-xs:clamp(.75rem,.7rem + .25vw,.875rem);
+      --text-sm:clamp(.875rem,.8rem + .35vw,1rem);
+      --text-base:clamp(1rem,.95rem + .25vw,1.125rem);
+      --text-lg:clamp(1.125rem,1rem + .75vw,1.5rem);
+      --text-xl:clamp(1.5rem,1.2rem + 1.25vw,2.25rem);
+      --text-2xl:clamp(2rem,1.2rem + 2.5vw,3.5rem);
+      --space-2:.5rem; --space-3:.75rem; --space-4:1rem; --space-5:1.25rem; --space-6:1.5rem; --space-8:2rem; --space-10:2.5rem; --space-12:3rem; --space-16:4rem;
+      --color-bg:#f8f4f5; --color-surface:#fffafb; --color-surface-2:#fff1f4; --color-border:#e7d4da; --color-text:#2a1f24; --color-text-muted:#7f6a73; --color-primary:#b04a75; --color-primary-hover:#92365d; --color-secondary:#e8bfd0; --color-success:#2f7d5b; --shadow-sm:0 1px 2px rgba(50,22,32,.08); --shadow-md:0 16px 38px rgba(50,22,32,.12); --radius-md:1rem; --radius-lg:1.5rem; --radius-xl:2rem; --radius-full:999px; --font-body:'Inter',system-ui,sans-serif; --font-display:'Cormorant Garamond',serif;
+    }
+    [data-theme="dark"]{
+      --color-bg:#161114; --color-surface:#20181c; --color-surface-2:#2b2026; --color-border:#483740; --color-text:#f7edf1; --color-text-muted:#cfb4bf; --color-primary:#ef7faa; --color-primary-hover:#ff98be; --color-secondary:#432a35; --color-success:#64c99a; --shadow-sm:0 1px 2px rgba(0,0,0,.28); --shadow-md:0 16px 38px rgba(0,0,0,.4);
+    }
+    @media (prefers-color-scheme: dark){
+      :root:not([data-theme]){
+        --color-bg:#161114; --color-surface:#20181c; --color-surface-2:#2b2026; --color-border:#483740; --color-text:#f7edf1; --color-text-muted:#cfb4bf; --color-primary:#ef7faa; --color-primary-hover:#ff98be; --color-secondary:#432a35; --color-success:#64c99a; --shadow-sm:0 1px 2px rgba(0,0,0,.28); --shadow-md:0 16px 38px rgba(0,0,0,.4);
+      }
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{min-height:100vh;font-family:var(--font-body);font-size:var(--text-base);line-height:1.65;background:radial-gradient(circle at top left,rgba(240,182,206,.28),transparent 30%),radial-gradient(circle at bottom right,rgba(176,74,117,.12),transparent 28%),var(--color-bg);color:var(--color-text)}
+    img,svg{display:block;max-width:100%} button,input{font:inherit;color:inherit} button{cursor:pointer;border:0;background:none} a{text-decoration:none;color:inherit}
+    .skip-link{position:absolute;left:-999px;top:0}.skip-link:focus{left:1rem;top:1rem;background:var(--color-primary);color:#fff;padding:.75rem 1rem;border-radius:.75rem;z-index:100}
+    .container{width:min(1120px,calc(100% - 2rem));margin-inline:auto}
+    .header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--color-bg) 84%, transparent);backdrop-filter:blur(14px);border-bottom:1px solid color-mix(in srgb,var(--color-text) 10%, transparent)}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 0;gap:1rem}
+    .brand{display:flex;align-items:center;gap:.85rem}.brand-mark{width:46px;height:46px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(180deg,var(--color-primary),#d98fb0);color:#fff;box-shadow:var(--shadow-sm)} .brand-name{font-family:var(--font-display);font-size:1.5rem}
+    .nav-actions{display:flex;align-items:center;gap:.75rem}.theme-toggle{min-width:44px;min-height:44px;border-radius:50%;display:grid;place-items:center;border:1px solid color-mix(in srgb,var(--color-text) 12%, transparent)}
+    .hero{padding:clamp(4rem,8vw,7rem) 0 3rem}
+    .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:2rem;align-items:center}
+    .eyebrow{display:inline-flex;align-items:center;gap:.5rem;padding:.45rem .85rem;background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:var(--radius-full);font-size:var(--text-xs);text-transform:uppercase;letter-spacing:.08em;color:var(--color-text-muted)}
+    h1{font-family:var(--font-display);font-size:clamp(3rem,5.5vw,5.8rem);line-height:.92;letter-spacing:-.03em;max-width:10ch;margin-top:1rem}
+    .hero p{max-width:58ch;color:var(--color-text-muted);margin-top:1rem}
+    .hero-card{background:linear-gradient(180deg,color-mix(in srgb,var(--color-surface) 92%, transparent),color-mix(in srgb,var(--color-surface-2) 92%, transparent));border:1px solid var(--color-border);border-radius:var(--radius-xl);box-shadow:var(--shadow-md);padding:1.4rem;position:relative;overflow:hidden}
+    .letter-scene{min-height:420px;border-radius:calc(var(--radius-xl) - .4rem);background:linear-gradient(180deg,#ffe5ee,#fff8fb);position:relative;overflow:hidden}
+    .floating-heart{position:absolute;width:18px;height:18px;background:var(--color-primary);transform:rotate(45deg);opacity:.18;animation:float 7s ease-in-out infinite}.floating-heart::before,.floating-heart::after{content:'';position:absolute;width:18px;height:18px;border-radius:50%;background:inherit}.floating-heart::before{left:-9px}.floating-heart::after{top:-9px}
+    .floating-heart:nth-child(1){left:15%;top:20%;animation-delay:0s}.floating-heart:nth-child(2){left:70%;top:28%;animation-delay:1.5s}.floating-heart:nth-child(3){left:45%;top:68%;animation-delay:3s}
+    .envelope{position:absolute;left:50%;top:54%;transform:translate(-50%,-50%);width:min(360px,80%);height:220px;background:#fff;border-radius:1.25rem;box-shadow:0 18px 40px rgba(98,38,62,.14);border:1px solid #efd0dd}
+    .envelope::before{content:'';position:absolute;inset:0;clip-path:polygon(0 0,50% 52%,100% 0,100% 0,0 0);background:#f8dce7;border-radius:1.25rem 1.25rem 0 0}
+    .letter{position:absolute;left:50%;top:28px;transform:translateX(-50%);width:76%;background:#fffafc;border:1px solid #eed9e2;border-radius:1rem;padding:1rem;box-shadow:0 10px 24px rgba(98,38,62,.08)}
+    .letter-lines{display:grid;gap:.55rem}.line{height:10px;border-radius:999px;background:linear-gradient(90deg,#efccdb,#f9ebf1)} .line:nth-child(2){width:85%}.line:nth-child(3){width:72%}
+    .chip-row{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.5rem}.chip{padding:.6rem .95rem;border-radius:999px;background:var(--color-surface);border:1px solid var(--color-border);font-size:var(--text-sm)}
+    section{padding:clamp(3rem,5vw,5rem) 0}
+    .section-head{display:flex;justify-content:space-between;gap:1rem;align-items:end;margin-bottom:2rem}.section-head h2{font-family:var(--font-display);font-size:var(--text-2xl)} .section-head p{max-width:56ch;color:var(--color-text-muted)}
+    .games{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+    .card{background:color-mix(in srgb,var(--color-surface) 94%, transparent);border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:1.35rem;box-shadow:var(--shadow-sm)}
+    .card h3{font-size:var(--text-lg);margin-bottom:.5rem}.muted{color:var(--color-text-muted)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:.85rem 1.15rem;border-radius:999px;font-size:var(--text-sm);font-weight:700}
+    .btn-primary{background:var(--color-primary);color:#fff}.btn-primary:hover{background:var(--color-primary-hover)}
+    .btn-soft{background:var(--color-surface-2);border:1px solid var(--color-border)}
+    .choices{display:grid;gap:.75rem;margin-top:1rem}.choice{width:100%;text-align:left;padding:.95rem 1rem;border-radius:1rem;border:1px solid var(--color-border);background:var(--color-surface-2)} .choice.correct{border-color:color-mix(in srgb,var(--color-success) 58%, var(--color-border));background:color-mix(in srgb,var(--color-success) 12%, var(--color-surface))} .choice.wrong{border-color:#d992af;background:color-mix(in srgb,#d992af 12%, var(--color-surface))}
+    .scramble-wrap{display:grid;gap:1rem;margin-top:1rem}.scramble-word{font-family:var(--font-display);font-size:var(--text-xl);letter-spacing:.08em}.input{width:100%;padding:.95rem 1rem;border-radius:1rem;border:1px solid var(--color-border);background:var(--color-surface-2);outline:none} .input:focus{border-color:var(--color-primary);box-shadow:0 0 0 4px color-mix(in srgb,var(--color-primary) 16%, transparent)}
+    .memory-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-top:1rem}.memory-card{aspect-ratio:1/1;border-radius:1rem;border:1px solid var(--color-border);background:var(--color-surface-2);display:grid;place-items:center;font-size:1.7rem;font-weight:700;user-select:none} .memory-card.revealed,.memory-card.matched{background:color-mix(in srgb,var(--color-primary) 14%, var(--color-surface));border-color:color-mix(in srgb,var(--color-primary) 40%, var(--color-border))}
+    .progress{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-top:1rem}.step{padding:1rem;border-radius:1rem;background:var(--color-surface-2);border:1px solid var(--color-border)} .step.done{background:color-mix(in srgb,var(--color-success) 12%, var(--color-surface));border-color:color-mix(in srgb,var(--color-success) 40%, var(--color-border))}
+    .locked-message{position:relative;overflow:hidden}.locked-overlay{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(180deg,color-mix(in srgb,var(--color-bg) 75%, transparent),color-mix(in srgb,var(--color-bg) 92%, transparent));backdrop-filter:blur(8px);text-align:center;padding:1.5rem}
+    .message-box{padding:1.5rem;border-radius:1.5rem;background:linear-gradient(180deg,color-mix(in srgb,var(--color-surface-2) 90%, transparent),color-mix(in srgb,var(--color-surface) 96%, transparent));border:1px solid var(--color-border);min-height:230px}
+    .message-box p + p{margin-top:1rem}
+    .footer{padding:2rem 0 3rem;color:var(--color-text-muted);font-size:var(--text-sm)}
+    .reveal{opacity:0;transform:translateY(18px);transition:opacity .65s ease, transform .65s ease}.reveal.visible{opacity:1;transform:none}
+    .success-note{margin-top:.85rem;font-size:var(--text-sm);font-weight:600;color:var(--color-success);min-height:1.3rem}
+    .error-note{color:#c6457d}
+    @keyframes float{0%,100%{transform:rotate(45deg) translateY(0)}50%{transform:rotate(45deg) translateY(-12px)}}
+    @media (max-width: 920px){.hero-grid,.games,.progress{grid-template-columns:1fr}.memory-grid{grid-template-columns:repeat(4,1fr)}}
+    @media (max-width: 640px){.memory-grid{grid-template-columns:repeat(3,1fr)}.section-head{display:block}.section-head p{margin-top:1rem}}
+    @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}.floating-heart,.reveal{animation:none;transition:none;opacity:1;transform:none}}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Sari la conținut</a>
+  <header class="header">
+    <div class="container nav">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10Z"/></svg>
+        </div>
+        <div class="brand-name">2 luni cu tine</div>
+      </div>
+      <div class="nav-actions">
+        <button class="theme-toggle" data-theme-toggle aria-label="Schimbă tema">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">Mică surpriză interactivă</span>
+          <h1>Pentru cele două luni ale noastre.</h1>
+          <p>Am făcut pagina asta ca să descoperi pas cu pas un mesaj pentru tine. Sunt trei jocuri mici, simple și drăguțe, iar la final se deschide paragraful ascuns.</p>
+	</div>
+        <div class="hero-card reveal">
+          <div class="letter-scene" aria-hidden="true">
+            <span class="floating-heart"></span>
+            <span class="floating-heart"></span>
+            <span class="floating-heart"></span>
+            <div class="envelope">
+              <div class="letter">
+                <div class="letter-lines">
+                  <span class="line"></span>
+                  <span class="line"></span>
+                  <span class="line"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <h2>Micile jocuri</h2>
+          </div>
+          <p>Fiecare joc completat îți deblochează o parte din surpriză. Când le termini pe toate, apare mesajul final.</p>
+        </div>
+
+        <div class="progress reveal">
+          <div class="step" data-step="1">1. Întrebare scurtă</div>
+          <div class="step" data-step="2">2. Cuvânt amestecat</div>
+          <div class="step" data-step="3">3. Memory rapid</div>
+        </div>
+
+        <div class="games" style="margin-top:1rem;">
+          <article class="card reveal">
+            <h3>1. Alege răspunsul dulce</h3>
+            <p class="muted">Care cuvânt se potrivește cel mai bine cu o relație frumoasă?</p>
+            <div class="choices" id="quizChoices">
+              <button class="choice" data-correct="false">Orgoliu</button>
+              <button class="choice" data-correct="true">Încredere</button>
+              <button class="choice" data-correct="false">Distanță rece</button>
+            </div>
+            <p class="success-note" id="quizNote"></p>
+          </article>
+
+          <article class="card reveal">
+            <h3>2. Pune cuvântul în ordine</h3>
+            <p class="muted">Descifrează cuvântul: este ceva ce simți pentru o persoană dragă.</p>
+            <div class="scramble-wrap">
+              <div class="scramble-word">I B U E R I</div>
+              <label for="scrambleInput" class="muted">Răspunsul tău</label>
+              <input id="scrambleInput" class="input" type="text" placeholder="Scrie cuvântul aici" autocomplete="off" />
+              <button class="btn btn-soft" id="scrambleBtn">Verifică</button>
+              <p class="success-note" id="scrambleNote"></p>
+            </div>
+          </article>
+
+          <article class="card reveal">
+            <h3>3. Memory rapid</h3>
+            <p class="muted">Găsește cele 3 perechi ca să termini surpriza.</p>
+            <div class="memory-grid" id="memoryGrid"></div>
+            <p class="success-note" id="memoryNote"></p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <h2>Mesajul ascuns</h2>
+          </div>
+          <p>După ce sunt bifate toate cele trei etape, se deschide automat.</p>
+        </div>
+        <article class="card locked-message reveal">
+          <div class="message-box" id="finalMessage">
+            <p>Mulțumesc pentru aceste două luni și pentru răbdarea, atenția și timpul tău. Chiar dacă nu ne-am văzut încă, pentru mine a contat mult că ai fost aici și că ai rămas lângă mine. Mi-a plăcut să vorbim, să te cunosc mai bine și să simt că se construiește ceva frumos între noi. Poate nu sunt mereu cel mai entuziasmat când vine vorba să ne vedem, dar asta nu schimbă faptul că te apreciez și că îți mulțumesc sincer pentru tot. La multe luni pentru noi, iar pagina asta mică este doar un mod simplu prin care am vrut să îți arăt că m-am gândit la tine.</p>
+          </div>
+          <div class="locked-overlay" id="overlayLock">
+            <div>
+              <h3 style="font-family:var(--font-display);font-size:var(--text-xl);margin-bottom:.75rem;">Mesaj blocat</h3>
+              <p class="muted">Completează cele 3 jocuri de mai sus ca să îl citești.</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const root = document.documentElement;
+      const toggle = document.querySelector('[data-theme-toggle]');
+      let theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      root.setAttribute('data-theme', theme);
+      const setIcon = () => {
+        toggle.innerHTML = theme === 'dark'
+          ? '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
+          : '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+      };
+      setIcon();
+      toggle.addEventListener('click', () => {
+        theme = theme === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', theme);
+        setIcon();
+      });
+
+      const state = { quiz:false, scramble:false, memory:false };
+      const steps = document.querySelectorAll('[data-step]');
+      const lock = document.getElementById('overlayLock');
+      const unlockCheck = () => {
+        steps[0].classList.toggle('done', state.quiz);
+        steps[1].classList.toggle('done', state.scramble);
+        steps[2].classList.toggle('done', state.memory);
+        if (state.quiz && state.scramble && state.memory) {
+          lock.style.display = 'none';
+          document.getElementById('finalMessage').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      };
+
+      const quizNote = document.getElementById('quizNote');
+      document.querySelectorAll('#quizChoices .choice').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (state.quiz) return;
+          const correct = btn.dataset.correct === 'true';
+          document.querySelectorAll('#quizChoices .choice').forEach(choice => choice.disabled = true);
+          btn.classList.add(correct ? 'correct' : 'wrong');
+          if (!correct) {
+            const right = document.querySelector('#quizChoices .choice[data-correct="true"]');
+            right.classList.add('correct');
+            quizNote.textContent = 'Răspunsul bun era „Încredere”.';
+            quizNote.classList.add('error-note');
+          } else {
+            quizNote.textContent = 'Corect. Un pas este deja făcut.';
+            state.quiz = true;
+            unlockCheck();
+          }
+        });
+      });
+
+      const scrambleBtn = document.getElementById('scrambleBtn');
+      const scrambleInput = document.getElementById('scrambleInput');
+      const scrambleNote = document.getElementById('scrambleNote');
+      const checkScramble = () => {
+        if (state.scramble) return;
+        const value = scrambleInput.value.trim().toLowerCase();
+        if (value === 'iubire') {
+          scrambleNote.textContent = 'Exact. Ai găsit cuvântul.';
+          state.scramble = true;
+          scrambleInput.disabled = true;
+          scrambleBtn.disabled = true;
+          unlockCheck();
+        } else {
+          scrambleNote.textContent = 'Mai încearcă o dată.';
+          scrambleNote.classList.add('error-note');
+        }
+      };
+      scrambleBtn.addEventListener('click', checkScramble);
+      scrambleInput.addEventListener('keydown', e => { if (e.key === 'Enter') checkScramble(); });
+
+      const icons = ['♥','♥','✦','✦','☾','☾'];
+      const shuffled = icons.sort(() => Math.random() - 0.5);
+      const memoryGrid = document.getElementById('memoryGrid');
+      const memoryNote = document.getElementById('memoryNote');
+      let opened = [];
+      let matched = 0;
+      shuffled.forEach((icon, index) => {
+        const card = document.createElement('button');
+        card.className = 'memory-card';
+        card.type = 'button';
+        card.dataset.icon = icon;
+        card.dataset.index = index;
+        card.setAttribute('aria-label', 'Card ascuns');
+        card.textContent = '?';
+        memoryGrid.appendChild(card);
+      });
+      memoryGrid.addEventListener('click', e => {
+        const card = e.target.closest('.memory-card');
+        if (!card || card.classList.contains('matched') || card.classList.contains('revealed') || opened.length === 2 || state.memory) return;
+        card.classList.add('revealed');
+        card.textContent = card.dataset.icon;
+        opened.push(card);
+        if (opened.length === 2) {
+          const [first, second] = opened;
+          if (first.dataset.icon === second.dataset.icon) {
+            first.classList.add('matched');
+            second.classList.add('matched');
+            first.classList.remove('revealed');
+            second.classList.remove('revealed');
+            opened = [];
+            matched += 1;
+            if (matched === 3) {
+              state.memory = true;
+              memoryNote.textContent = 'Toate perechile au fost găsite.';
+              unlockCheck();
+            }
+          } else {
+            setTimeout(() => {
+              first.classList.remove('revealed');
+              second.classList.remove('revealed');
+              first.textContent = '?';
+              second.textContent = '?';
+              opened = [];
+            }, 700);
+          }
+        }
+      });
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+      }, { threshold: .15 });
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    })();
+  </script>
+</body>
+</html>
